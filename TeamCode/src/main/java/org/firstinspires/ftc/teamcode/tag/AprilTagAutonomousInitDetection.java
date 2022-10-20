@@ -33,7 +33,7 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 
 import java.util.ArrayList;
 
-@TeleOp
+@TeleOp(name="AprilTag")
 public class AprilTagAutonomousInitDetection extends LinearOpMode
 {
     OpenCvCamera camera;
@@ -99,7 +99,7 @@ public class AprilTagAutonomousInitDetection extends LinearOpMode
 
                 for(AprilTagDetection tag : currentDetections)
                 {
-                    if(tag.id == ID_TAG_OF_INTEREST)
+                    if(tag.id == STANGA || tag.id == MIJLOC || tag.id == DREAPTA)
                     {
                         tagOfInterest = tag;
                         tagFound = true;
@@ -167,33 +167,19 @@ public class AprilTagAutonomousInitDetection extends LinearOpMode
         }
 
         /* Actually do something useful */
-        if(tagOfInterest == null)
-        {
-            /*
-             * Insert your autonomous code here, presumably running some default configuration
-             * since the tag was never sighted during INIT
-             */
-        }
-        else
-        {
-            /*
-             * Insert your autonomous code here, probably using the tag pose to decide your configuration.
-             */
+        if(tagOfInterest == null || tagOfInterest.id == STANGA){
+            telemetry.addLine("Tag stanga");
+            telemetry.update();
 
-            // e.g.
-            if(tagOfInterest.pose.x <= 20)
-            {
-                // do something
-            }
-            else if(tagOfInterest.pose.x >= 20 && tagOfInterest.pose.x <= 50)
-            {
-                // do something else
-            }
-            else if(tagOfInterest.pose.x >= 50)
-            {
-                // do something else
-            }
+        }else if(tagOfInterest.id == MIJLOC){
+            telemetry.addLine("Tag mijloc");
+            telemetry.update();
+        }else{
+            telemetry.addLine("Tag dreapta");
+            telemetry.update();
         }
+
+
 
 
         /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */
